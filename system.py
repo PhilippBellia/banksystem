@@ -3,6 +3,7 @@
 '''
 import tkinter
 import hashlib as h
+import bcrypt
 
 class Konto:
     
@@ -27,13 +28,82 @@ class Konto:
 def fenster_schliessen():
     Sitzung.destroy()
 
+def pw_hash(pw_as_string):
+
+    salt = bcrypt.gensalt()
+    h = bcrypt.hashpw(pw_as_string, salt)
+    return h
+
+
 def anmelden():
     anmelde_file = open("Accounts.txt", "r")
-    accounts = anmelde_file.readline(1)
-    print(accounts)
+    for line in anmelde_file.read():
+        if str(eingabe_1) == line:
+            keys = open("pass.txt", "r")
+            pw = str(eingabe_2)
+            for o_line in keys.read():
+                test_ob_pw_richtig = bcrypt.compare(pw, o_line)
+                if test_ob_pw_richtig == True:
+                    return True
+                else:
+                    continue
+        else:
+            print("Falscher Benutzername")
+            return False
+
+
 
 def registrieren():
-    pass
+
+    def fenster_schliessen_2():
+        registrationsfenster.destroy()
+
+    def registration():
+        account_file = open("Accounts.txt", "r")
+        for line in account_file.read():
+            if line == str(namen_eingabe):
+                print("Name ist bereites vergeben!")
+                return print("Error, Eingabe wiederholen")
+            else:
+                continue
+
+        pw_ = pw_hash(str(passwort_eingabe))
+
+        pw_file = open("pass.txt", "r")
+        for paw in pw_file.read():
+            if paw == pw_:
+                print("anderes Passwort festlegen")
+                return print("Error")
+            else:
+                continue
+
+
+
+        account_file.close()
+        account_file = open("Accounts.txt", "p")
+        account_file.write("\n" + str(namen_eingabe))
+
+
+
+
+    registrationsfenster = tkinter.Toplevel(Sitzung)
+
+    namen_label = tkinter.Label(registrationsfenster, text="Benutzername").pack()
+    namen_eingabe = tkinter.Entry(registrationsfenster).pack()
+
+    passwort_label = tkinter.Label(registrationsfenster, text="Passwort festlegen:").pack()
+    passwort_eingabe = tkinter.Entry(registrationsfenster, text="Passwort sicher bestimmen").pack()
+
+    registrieren_button = tkinter.Button(registrationsfenster, text="Registrieren", command=registration).pack()
+
+    registrationsfenster_beenden = tkinter.Button(registrationsfenster, text="Schließen", command=fenster_schliessen_2).pack()
+
+
+    anmelde_file = open("Accounts.txt", "r")
+    #for line in anmelde_file.read():
+
+
+
 
 if __name__ == "__main__":
 
@@ -53,4 +123,6 @@ if __name__ == "__main__":
     Sitzung.mainloop()
 
     
+
+
 
