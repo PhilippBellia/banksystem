@@ -2,6 +2,7 @@
 Übung mit Klassen umzugehen
 '''
 import tkinter
+import hashlib as h
 
 class Konto:
     
@@ -26,16 +27,28 @@ class Konto:
 def fenster_schliessen():
     Sitzung.destroy()
 
+def anmelden():
+    anmelde_file = open("Accounts.txt", "r")
+    accounts = anmelde_file.readline(1)
+    print(accounts)
 
+def registrieren():
+    pass
 
 if __name__ == "__main__":
 
     Sitzung = tkinter.Tk()
     Sitzung.title("Login")
 
+    benutzer = tkinter.Label(Sitzung, text="Benutzername:").grid(row=0, column=0)
+    passwort = tkinter.Label(Sitzung, text="Passwort:").grid(row=1, column=0)
 
+    eingabe_1 = tkinter.Entry(Sitzung, text="Benutzername" ).grid(row=0, column=1)
+    eingabe_2 = tkinter.Entry(Sitzung, text="Passwort").grid(row=1, column=1)
 
-
+    schließen = tkinter.Button(Sitzung, text="Beenden", command=fenster_schliessen).grid(row=2)
+    anmelden_button = tkinter.Button(Sitzung, text="Anmelden", command=anmelden).grid(row=2, column=1)
+    registrieren_button = tkinter.Button(Sitzung, text="Registrieren", command=registrieren).grid(row=2, column=2)
 
     Sitzung.mainloop()
 
