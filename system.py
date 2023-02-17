@@ -107,9 +107,9 @@ def registrieren():
 
 if __name__ == "__main__":
 
-    print("hallo")
+    
     Sitzung = tkinter.Tk()
-    Sitzung.geometry("300x400+30+30")
+    Sitzung.geometry("300x400+100+100")
     Sitzung.title("Login")
     
 
