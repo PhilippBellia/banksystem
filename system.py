@@ -109,12 +109,14 @@ if __name__ == "__main__":
 
     print("hallo")
     Sitzung = tkinter.Tk()
+    Sitzung.geometry("300x400+30+30")
     Sitzung.title("Login")
+    
 
     benutzer = tkinter.Label(Sitzung, text="Benutzername:").grid(row=0, column=0)
     passwort = tkinter.Label(Sitzung, text="Passwort:").grid(row=1, column=0)
 
-    eingabe_1 = tkinter.Entry(Sitzung, text="Benutzername" ).grid(row=0, column=1)
+    eingabe_1 = tkinter.Entry(Sitzung, text="Benutzername").grid(row=0, column=1)
     eingabe_2 = tkinter.Entry(Sitzung, text="Passwort").grid(row=1, column=1)
 
     schließen = tkinter.Button(Sitzung, text="Beenden", command=fenster_schliessen).grid(row=2)
