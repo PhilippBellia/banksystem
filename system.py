@@ -63,27 +63,30 @@ def registrieren():
         # Check ob Name bereits vergeben ist ######################################################
         account_file = open("anmelde_file.txt", "r")
         namen = []
-        zeilen = account_file.readline()
-        for zeile in zeilen:
-            name = zeile.split()[0]
-            namen.append(name)
+        zeilen = account_file.readlines()
+        print(type(zeilen))
+        if zeilen:    
+            for zeile in zeilen:
+                name = zeile.split()[0]
+                namen.append(name)
 
-        for name in namen:
-            if namen_eingabe == name: 
-                print("Benutzer ist bereits vergeben, bitte anderen Namen waehlen! ")
-                return 0
-    
+            for name in namen:
+                if namen_eingabe.get() == name: 
+                    print("Benutzer ist bereits vergeben, bitte anderen Namen waehlen! ")
+                    return 0
+        else: 
+            print("Liste ist leer")
         account_file.close()
         print("Benutzername ist verfügbar!")
         ############################################################################################
 
         # Passwort aus Eingabefeld nehmen, hashen und Hash printen #################################
-        pw_ = pw_hash(str(passwort_eingabe).encode("utf-8"))
+        pw_ = pw_hash(str(passwort_eingabe.get()).encode("utf-8"))
         print("PW-Hash: ", pw_)
         ############################################################################################
         
         # Benutzer als Tupel sichern und in eine Datei hineinschreiben #############################
-        neuer_benutzer = (str(namen_eingabe), pw_)
+        neuer_benutzer = (str(namen_eingabe.get()), pw_)
 
         benutzer_hinzufügen = open("anmelde_file.txt", "a")
         for benutzer in neuer_benutzer:
@@ -98,6 +101,7 @@ def registrieren():
 
     namen_label = tkinter.Label(registrationsfenster, text="Benutzername").pack()
     namen_eingabe = tkinter.Entry(registrationsfenster).pack()
+    
 
     passwort_label = tkinter.Label(registrationsfenster, text="Passwort festlegen:").pack()
     passwort_eingabe = tkinter.Entry(registrationsfenster, text="Passwort sicher bestimmen").pack()
