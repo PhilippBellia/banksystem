@@ -1,2 +1,5 @@
 Benutzername Passwort-Hash
 None b'$2b$12$/Q3tfZ7WfxhR3lySHGThqe41SDr3Og5YbsEfqsN8ty8NhxM7Iv9ZS' 
+Philipp b'$2b$12$Qv8I59lkrSTsjsDYe/3HM.8JF8NEpHZpEn6v8y7diSv4tliGnFTRe' 
+Philipp2 b'$2b$12$rntpgN2XlH47vETMmwHihe23TF4el7x/HpJNKGeEuBa5RAL.AdQka' 
+Julia b'$2b$12$OfZdZSO71FVWaFJFQVgEp.QqBzTTvO88xE/ncTMXzURZuilSLKiCy' 

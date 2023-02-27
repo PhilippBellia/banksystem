@@ -36,22 +36,37 @@ def pw_hash(pw_as_string):
 
 
 def anmelden():
-    anmelde_file = open("Accounts.txt", "r")
-    for line in anmelde_file.read():
-        if str(eingabe_1) == line:
-            keys = open("pass.txt", "r")
-            pw = str(eingabe_2)
-            for o_line in keys.read():
-                test_ob_pw_richtig = bcrypt.compare(pw, o_line)
-                if test_ob_pw_richtig == True:
-                    return True
-                else:
-                    continue
-        else:
-            #tkinter.Message(Sitzung, text="Falscher Benutzername oder Benutzername bereits vergeben")
-            print("Falscher Benutzername")
-            return False
+    anmelde_file = open("anmelde_file.txt", "r")
 
+    namen = []
+    zeilen = anmelde_file.readlines()
+    print(type(zeilen))
+    if zeilen:    
+        for zeile in zeilen:
+            name = zeile.split()[0]
+            namen.append(name)
+    anmelde_file.close()
+
+    for name in namen:
+        if eingabe_1.get() == name:
+            passwort = eingabe_2.get()
+            passw_hash = pw_hash(passwort.encode("utf-8"))
+            print(passw_hash)
+            anmelde_file = open("anmelde_file.txt", "r")
+            passwoerter = []
+            rows = anmelde_file.readlines()
+            if rows:
+                for row in rows:
+                    passwort = row.split()[1]
+                    passwoerter.append(passwort)
+            anmelde_file.close()
+
+            for pw in passwoerter:
+                if pw == passw_hash:
+                    print("Eingeloggt")
+                    return 0
+            print("Falsches Passwort oder Benutzername")
+           
 
 
 def registrieren():
@@ -98,17 +113,27 @@ def registrieren():
 
     # Registrationsfenster ##########################################################################
     registrationsfenster = tkinter.Toplevel(Sitzung)
+    registrationsfenster.geometry("400x200")
+    registrationsfenster.title("Registrationsfenster")
 
-    namen_label = tkinter.Label(registrationsfenster, text="Benutzername").pack()
-    namen_eingabe = tkinter.Entry(registrationsfenster).pack()
+    namen_label = tkinter.Label(registrationsfenster, text="Benutzername")
+    namen_label.pack()
+
+    namen_eingabe = tkinter.Entry(registrationsfenster)
+    namen_eingabe.pack()
     
 
-    passwort_label = tkinter.Label(registrationsfenster, text="Passwort festlegen:").pack()
-    passwort_eingabe = tkinter.Entry(registrationsfenster, text="Passwort sicher bestimmen").pack()
+    passwort_label = tkinter.Label(registrationsfenster, text="Passwort festlegen:")
+    passwort_label.pack()
 
-    registrieren_button = tkinter.Button(registrationsfenster, text="Registrieren", command=registration).pack()
+    passwort_eingabe = tkinter.Entry(registrationsfenster, text="Passwort sicher bestimmen")
+    passwort_eingabe.pack()
 
-    registrationsfenster_beenden = tkinter.Button(registrationsfenster, text="Schließen", command=fenster_schliessen_2).pack()
+    registrieren_button = tkinter.Button(registrationsfenster, text="Registrieren", command=registration)
+    registrieren_button.pack()
+
+    registrationsfenster_beenden = tkinter.Button(registrationsfenster, text="Schließen", command=fenster_schliessen_2)
+    registrationsfenster_beenden.pack()
     ##################################################################################################
 
     
@@ -120,19 +145,28 @@ if __name__ == "__main__":
 
     
     Sitzung = tkinter.Tk()
-    Sitzung.geometry("300x400+100+100")
+    Sitzung.geometry("300x200+100+100")
     Sitzung.title("Login")
     
 
-    benutzer = tkinter.Label(Sitzung, text="Benutzername:").grid(row=0, column=0)
-    passwort = tkinter.Label(Sitzung, text="Passwort:").grid(row=1, column=0)
+    benutzer = tkinter.Label(Sitzung, text="Benutzername:")
+    benutzer.grid(row=0, column=0)
 
-    eingabe_1 = tkinter.Entry(Sitzung, text="Benutzername").grid(row=0, column=1)
-    eingabe_2 = tkinter.Entry(Sitzung, text="Passwort").grid(row=1, column=1)
+    passwort = tkinter.Label(Sitzung, text="Passwort:")
+    passwort.grid(row=1, column=0)
 
-    schließen = tkinter.Button(Sitzung, text="Beenden", command=fenster_schliessen).grid(row=2)
-    anmelden_button = tkinter.Button(Sitzung, text="Anmelden", command=anmelden).grid(row=2, column=1)
-    registrieren_button = tkinter.Button(Sitzung, text="Registrieren", command=registrieren).grid(row=2, column=2)
+    eingabe_1 = tkinter.Entry(Sitzung, text="Benutzername")
+    eingabe_1.grid(row=0, column=1)
+    eingabe_2 = tkinter.Entry(Sitzung, text="Passwort")
+    eingabe_2.grid(row=1, column=1)
+
+    schließen = tkinter.Button(Sitzung, text="Beenden", command=fenster_schliessen)
+    schließen.grid(row=2)
+
+    anmelden_button = tkinter.Button(Sitzung, text="Anmelden", command=anmelden)
+    anmelden_button.grid(row=2, column=1)
+    registrieren_button = tkinter.Button(Sitzung, text="Registrieren", command=registrieren)
+    registrieren_button.grid(row=2, column=2)
 
     Sitzung.mainloop()
 
